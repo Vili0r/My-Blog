@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -80,4 +81,29 @@ class Article extends Model implements HasMedia
     {
         return $this->likes()->count();
     }
+
+    public function scopeCategory(Builder $query, $category)
+    {
+        return $query->where('category_id', $category);
+    }
+    
+    public function scopeFeatured(Builder $query)
+    {
+        return $query->where('featured', 1);
+    }
+    
+    public function scopePublished(Builder $query)
+    {
+        return $query->whereNotNull('published_at')->where('published_at', '<=', new \DateTime());
+    } 
+    
+    public function scopeRecentAsc(Builder $query)
+    {
+        return $query->orderBy('title', 'asc');
+    } 
+    
+    public function scopeRecentDesc(Builder $query)
+    {
+        return $query->orderBy('title', 'desc');
+    } 
 }

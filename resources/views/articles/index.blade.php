@@ -6,7 +6,7 @@
                     {{ __('Articles') }}
                 </h2>
             </div>
-            <div class="flex-1 w-32">
+            <div class="flex justify-end w-32">
                 @hasrole('writer|Super Admin')
                     <a href="{{ route('articles.create') }}">
                         <x-ri-article-line class="w-8 h-8"/>

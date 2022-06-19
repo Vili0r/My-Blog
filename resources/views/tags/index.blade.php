@@ -6,7 +6,7 @@
                     {{ __('Tags') }}
                 </h2>
             </div>
-            <div class="flex-1 w-32">
+            <div class="flex justify-end w-32">
                 @hasanyrole('publisher|admin|Super Admin')
                 <a href="{{ route('tags.create') }}">
                     <x-fas-tags class="w-8 h-8"/>

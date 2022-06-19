@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\Category;
-use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
@@ -15,19 +13,23 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $articles = Article::where('featured', 1)->get();
-
-        // $popularArticle = Article::with('likes')
-        //         ->orderBy('likes_count', 'desc')
-        //         ->take(1)
-        //         ->get();
-
-        $popularArticle = Article::select('title', 'created_at', 'body', 'cover_image', 'user_id')
+        $popularArticles = Article::featured()
+                ->published()
                 ->withCount('likes')
                 ->orderBy('likes_count', 'desc')
-                ->take(1)
+                ->take(4)
                 ->get();
 
-        return view('blogs.index', compact('articles', 'popularArticle'));
+        return view('welcome', compact('popularArticles'));
+    }
+
+    public function show(Article $article)
+    {
+        return view('blog.show', compact('article'));
+    }
+
+    public function posts()
+    {
+        return view('blog.posts');
     }
 }
